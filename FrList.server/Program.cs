@@ -1,4 +1,7 @@
 using FrList.server.Data;
+using FrList.server.Endpoints;
+using FrList.server.Mappers;
+using FrList.server.Repositories;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +14,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<FrListDbContext>(options => {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
+builder.Services.AddScoped<IPersonRepository, PersonRepository>();
+builder.Services.AddScoped<IPersonMapper, PersonMapper>();
 
 builder.Services.AddCors();
 
@@ -54,6 +59,7 @@ app.MapGet("/weatherforecast", () =>
 .WithName("GetWeatherForecast")
 .WithOpenApi();
 
+app.MapPersonEndpoints();
 
 app.Run();
 
