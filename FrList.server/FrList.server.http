@@ -1,0 +1,6 @@
+@FrList.server_HostAddress = http://localhost:5071
+
+GET {{FrList.server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
