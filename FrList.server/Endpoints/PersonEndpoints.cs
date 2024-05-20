@@ -1,5 +1,6 @@
 ﻿using FrList.server.Dtos;
 using FrList.server.Repositories;
+using FrList.server.Validation;
 using LanguageExt;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,8 +32,13 @@ public static class PersonEndpoints {
 
         app.MapPost("/persons", async (
             IPersonRepository repository,
-            [FromBody] CreatePersonDto dto
+            [FromBody] CreatePersonDto dto,
+            CreatePersonDtoValidator validator
         ) => {
+            var validationResult = await validator.ValidateAsync(dto); 
+            
+            if (!validationResult.IsValid) return Results.ValidationProblem(validationResult.ToDictionary());
+            
             var person = await repository.CreatePerson(dto);
 
             return Results.Created($"/persons/{person.PersonId}", person);

@@ -2,6 +2,7 @@ using FrList.server.Data;
 using FrList.server.Endpoints;
 using FrList.server.Mappers;
 using FrList.server.Repositories;
+using FrList.server.Validation;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +17,7 @@ builder.Services.AddDbContext<FrListDbContext>(options => {
 });
 builder.Services.AddScoped<IPersonRepository, PersonRepository>();
 builder.Services.AddScoped<IPersonMapper, PersonMapper>();
-
+builder.Services.AddScoped<CreatePersonDtoValidator>();
 builder.Services.AddCors();
 
 

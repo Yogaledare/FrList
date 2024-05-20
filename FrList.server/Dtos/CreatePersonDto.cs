@@ -2,7 +2,7 @@
 
 public record CreatePersonDto(
     string Name,
-    int Age,
+    int? Age,
     string Nick,
-    DateOnly Date
+    string Date
 );

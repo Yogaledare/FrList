@@ -25,6 +25,7 @@ public class PersonRepository : IPersonRepository {
 
     public async Task<ICollection<PersonDto>> GetAllPersons() {
         var persons = await _context.Persons
+            .OrderByDescending(p => p.Date)
             .Select(p => _mapper.Person_PersonDto(p))
             .ToListAsync();
 
